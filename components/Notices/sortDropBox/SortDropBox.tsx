@@ -1,7 +1,7 @@
-import { useState } from "react";
-import classNames from "classnames/bind";
+import { useState } from 'react';
+import classNames from 'classnames/bind';
 
-import styles from "./SortDropBox.module.scss";
+import styles from './SortDropBox.module.scss';
 
 const cn = classNames.bind(styles);
 
@@ -25,21 +25,21 @@ export default function SortDropBox({ list, selectedItem, handleSortButtonClick 
       setIsDropBoxOpen(false);
     }, 150);
   };
-  const handleSelectSort = (e) => {
+  const handleSelectSort = (e: any) => {
     setIsDropBoxOpen(false);
     handleSortButtonClick(e);
   };
 
   return (
-    <div className={cn("container")} onBlur={handleDropBoxBlur}>
-      <button className={cn("defaultValue")} onClick={handleDropBoxOpen}>
+    <div className={cn('container')} onBlur={handleDropBoxBlur}>
+      <button className={cn('defaultValue')} onClick={handleDropBoxOpen}>
         {selectedItem.name}
-        <span className={cn("icon", isDropBoxOpen ? "closeIcon" : "openIcon")}>열기</span>
+        <span className={cn('icon', isDropBoxOpen ? 'closeIcon' : 'openIcon')}>열기</span>
       </button>
       {isDropBoxOpen && (
-        <ul className={cn("dropdown", isDropBoxOpen && "opened")}>
+        <ul className={cn('dropdown', isDropBoxOpen && 'opened')}>
           {list.map(({ id, name }) => (
-            <li className={cn("dropdownItem")} key={id}>
+            <li className={cn('dropdownItem')} key={id}>
               <button value={id} onClick={handleSelectSort}>
                 {name}
               </button>

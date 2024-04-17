@@ -1,6 +1,6 @@
-import instance from "@/lib/axiosInstance";
+import instance from '@/lib/axiosInstance';
 
-export default async function useNotDobbyCustomList(setCustomList: (arg: Array<any>) => void) {
+export default async function getNotDobbyCustomList(setCustomList: (arg: Array<any>) => void) {
   const res = (await instance.get(`notices`)).data;
   const currentDate = new Date();
   const customItems = res.items.filter(
@@ -9,7 +9,7 @@ export default async function useNotDobbyCustomList(setCustomList: (arg: Array<a
   let customList = [...customItems];
 
   const nextUrl = res.links[2].href;
-  const url = nextUrl.substring(nextUrl.indexOf("?"));
+  const url = nextUrl.substring(nextUrl.indexOf('?'));
 
   if (res.hasNext) {
     recursion(url);
@@ -23,7 +23,7 @@ export default async function useNotDobbyCustomList(setCustomList: (arg: Array<a
     customList.push(...customItems);
     if (res.hasNext) {
       const nextUrl = res.links[2].href;
-      const nextUrlParams = nextUrl.substring(nextUrl.indexOf("?"));
+      const nextUrlParams = nextUrl.substring(nextUrl.indexOf('?'));
       recursion(nextUrlParams);
     } else {
       setCustomList(customList);

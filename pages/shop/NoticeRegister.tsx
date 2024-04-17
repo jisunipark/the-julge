@@ -1,14 +1,14 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import { useRouter } from "next/router";
-import classNames from "classnames/bind";
-import CloseButton from "@/components/common/closeButton/CloseButton";
-import Input from "../../components/common/input/Input";
-import CalenderInput from "@/components/common/input/CalenderInput";
-import Textarea from "@/components/common/textarea/Textarea";
-import Button from "@/components/common/button/Button";
-import Modal from "@/components/common/modal/Modal";
-import usePostNotice from "@/components/register/notice/noticeRegister/usePostNotice";
-import styles from "@/components/register/notice/NoticeRegister/NoticeRegister.module.scss";
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { useRouter } from 'next/router';
+import classNames from 'classnames/bind';
+import CloseButton from '@/components/common/closeButton/CloseButton';
+import Input from '../../components/common/input/Input';
+import CalenderInput from '@/components/common/input/CalenderInput';
+import Textarea from '@/components/common/textarea/Textarea';
+import Button from '@/components/common/button/Button';
+import Modal from '@/components/common/modal/Modal';
+import postNotice from '@/components/register/notice/NoticeRegister/usePostNotice';
+import styles from '@/components/register/notice/NoticeRegister/NoticeRegister.module.scss';
 
 const cn = classNames.bind(styles);
 
@@ -29,16 +29,16 @@ interface ModalType {
 export default function NoticeRegister() {
   const [inputState, setInputState] = useState<StateType>({
     hourlyPay: undefined,
-    startsAt: "",
+    startsAt: '',
     workhour: undefined,
-    description: "",
+    description: '',
   });
-  
+
   const [modal, setModal] = useState<ModalType>({
     postSuccessModal: false,
     postFailModal: false,
     askCloseModal: false,
-    modalText: "",
+    modalText: '',
   });
 
   const router = useRouter();
@@ -58,11 +58,11 @@ export default function NoticeRegister() {
   }
 
   function movementToShop(): void {
-    router.push("/shop");
+    router.push('/shop');
   }
 
   function postSuccess(): void {
-    router.push("/shop");
+    router.push('/shop');
   }
 
   function postFail(): void {
@@ -71,11 +71,11 @@ export default function NoticeRegister() {
 
   function submit(e: FormEvent): void {
     e.preventDefault();
-    usePostNotice(inputState, setModal);
+    postNotice(inputState, setModal);
   }
 
   return (
-    <div className={cn("wrapper")}>
+    <div className={cn('wrapper')}>
       {modal.postSuccessModal && (
         <Modal>
           <Modal.Confirm text={modal.modalText} handleButtonClick={postSuccess} />
@@ -96,19 +96,19 @@ export default function NoticeRegister() {
           />
         </Modal>
       )}
-      <form onSubmit={submit} className={cn("formBox")}>
-        <div className={cn("titleBox")}>
-          <h1 className={cn("title")}>공고 등록</h1>
+      <form onSubmit={submit} className={cn('formBox')}>
+        <div className={cn('titleBox')}>
+          <h1 className={cn('title')}>공고 등록</h1>
           <CloseButton buttonClickEvent={activateAskCloaseModal} />
         </div>
-        <div className={cn("noticeBox")}>
+        <div className={cn('noticeBox')}>
           <Input
             label="hourlyPay"
             title="시급"
             input={{
-              type: "number",
-              id: "hourlyPay",
-              name: "hourlyPay",
+              type: 'number',
+              id: 'hourlyPay',
+              name: 'hourlyPay',
             }}
             placeholder="0"
             onChange={setState}
@@ -118,9 +118,9 @@ export default function NoticeRegister() {
             label="startsAt"
             title="시작 일시"
             input={{
-              type: "datetime-local",
-              id: "startsAt",
-              name: "startsAt",
+              type: 'datetime-local',
+              id: 'startsAt',
+              name: 'startsAt',
             }}
             onChange={setState}
           />
@@ -128,9 +128,9 @@ export default function NoticeRegister() {
             label="workhour"
             title="업무 시간"
             input={{
-              type: "number",
-              id: "workhour",
-              name: "workhour",
+              type: 'number',
+              id: 'workhour',
+              name: 'workhour',
             }}
             onChange={setState}
             floatingText="시간"
@@ -140,7 +140,7 @@ export default function NoticeRegister() {
         <Textarea
           label="description"
           title="공고 설명"
-          textarea={{ id: "description", name: "description" }}
+          textarea={{ id: 'description', name: 'description' }}
           value={inputState.description}
           onChange={setState}
         />

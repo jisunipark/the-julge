@@ -1,22 +1,22 @@
-import { useState } from "react";
-import SelectBox from "./SelectBoxDropDown";
-import { FormValues } from "@/components/register/shopInfo/ShopInfoForm/type";
-import { FOOD_CATEGORY } from "@/components/register/shopInfo/ShopInfoForm/constants";
+import { useState } from 'react';
+import SelectBox from './SelectBoxDropDown';
+import { FOOD_CATEGORY } from '@/components/register/shopInfo/shopInfoForm/constants';
+import { UpdateUser } from '@/types/apiTypes';
 
 export default function SelectBox_example() {
   // 아래와 같이 객체 형태로 만들어 "선택"을 입력해줍니다.
   const initialFormValues = {
-    name: "",
-    category: "선택",
-    address1: "선택",
-    address2: "",
-    description: "",
-    imageUrl: "",
+    name: '',
+    category: '선택',
+    address1: '선택',
+    address2: '',
+    description: '',
+    imageUrl: '',
     originalHourlyPay: 0,
   };
 
   // FormValues는 제가 정의한 type.ts에서 가져온 타입으로 새롭게 타입만들어서 지정해주시면 됩니다.
-  const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
+  const [formValues, setFormValues] = useState(initialFormValues);
 
   // 현재 SelectBox 컴포넌트에 넘겨주어야하는 props을 적어주시면 됩니다
   /*
@@ -31,7 +31,7 @@ export default function SelectBox_example() {
       label="address1"
       title="주소*"
       item={FOOD_CATEGORY}
-      defaultValue={formValues.address1}
+      value={formValues.address1}
       setFormValues={setFormValues}
     />
   );

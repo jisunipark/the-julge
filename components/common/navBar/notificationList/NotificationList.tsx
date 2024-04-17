@@ -1,13 +1,14 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import { useMediaQuery } from "react-responsive";
-import Image from "next/image";
-import NotificationItem from "../notificationItem/NotificationItem";
-import CloseIcon from "@/public/images/close.svg";
-import { useAuth } from "@/contexts/AuthProvider";
-import { getAlerts } from "@/lib/getAlerts";
-import { AlertItems } from "@/types/alertsType";
-import styles from "./NotificationList.module.scss";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import { useMediaQuery } from 'react-responsive';
+import Image from 'next/image';
+import NotificationItem from '../notificationItem/NotificationItem';
+import CloseIcon from '@/public/images/close.svg';
+import { useAuth } from '@/contexts/AuthProvider';
+import { getAlerts } from '@/lib/getAlerts';
+import { AlertItems } from '@/types/alertsType';
+import styles from './NotificationList.module.scss';
 
 const cn = classNames.bind(styles);
 
@@ -19,7 +20,7 @@ type Props = {
 
 export default function NotificationList({ isOpen, setIsOpen, setIsActive }: Props) {
   const isMobile: boolean = useMediaQuery({
-    query: "(max-width:743px)",
+    query: '(max-width:743px)',
   });
 
   const closeNotification = () => {
@@ -38,8 +39,8 @@ export default function NotificationList({ isOpen, setIsOpen, setIsActive }: Pro
 
   if (!user) return;
   return (
-    <div className={cn("wrap")}>
-      <div className={cn("title")}>
+    <div className={cn('wrap')}>
+      <div className={cn('title')}>
         <h2>알림 {alerts.length}개</h2>
         {isMobile && isOpen && (
           <button type="button" onClick={closeNotification}>
@@ -47,7 +48,7 @@ export default function NotificationList({ isOpen, setIsOpen, setIsActive }: Pro
           </button>
         )}
       </div>
-      <ul className={cn("list")}>
+      <ul className={cn('list')}>
         {alerts.length ? (
           alerts?.map(({ item: { shop, notice, result, createdAt, id } }) => {
             const notificationItemProps = {
@@ -65,7 +66,7 @@ export default function NotificationList({ isOpen, setIsOpen, setIsActive }: Pro
             );
           })
         ) : (
-          <div className={cn("noAlert")}>알림이 없습니다</div>
+          <div className={cn('noAlert')}>알림이 없습니다</div>
         )}
       </ul>
     </div>

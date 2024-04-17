@@ -1,16 +1,17 @@
-import { Dispatch, MouseEventHandler, SetStateAction } from "react";
-import { useEffect, useState } from "react";
-import classNames from "classnames/bind";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
 
-import { changePageGroup, getCurrentPageGroup } from "@/lib/pagenation";
+import { changePageGroup, getCurrentPageGroup } from '@/lib/pagenation';
 
-import Previous from "@/public/images/chevron_left.svg";
-import PreviousInactive from "@/public/images/chevron_left_inactive.svg";
-import Next from "@/public/images/chevron_right.svg";
-import NextInactive from "@/public/images/chevron_right_inactive.svg";
+import Previous from '@/public/images/chevron_left.svg';
+import PreviousInactive from '@/public/images/chevron_left_inactive.svg';
+import Next from '@/public/images/chevron_right.svg';
+import NextInactive from '@/public/images/chevron_right_inactive.svg';
 
-import styls from "./Pagenation.module.scss";
-import Image from "next/image";
+import styls from './Pagenation.module.scss';
+import Image from 'next/image';
 
 const cn = classNames.bind(styls);
 
@@ -61,28 +62,33 @@ export default function Pagenation({
   };
 
   const moveToPreviousPageGroup = () => {
-    const previous = changePageGroup("previous", limitPerPageGroup, totalPageNumber, currentPageNumber);
+    const previous = changePageGroup(
+      'previous',
+      limitPerPageGroup,
+      totalPageNumber,
+      currentPageNumber
+    );
     setCurrentPageGroup(previous);
     setCurrentPageNumber(previous[0]);
     handleChangeData(previous[0]);
   };
 
   const moveToNextPageGroup = () => {
-    const next = changePageGroup("next", limitPerPageGroup, totalPageNumber, currentPageNumber);
+    const next = changePageGroup('next', limitPerPageGroup, totalPageNumber, currentPageNumber);
     setCurrentPageGroup(next);
     setCurrentPageNumber(next[0]);
     handleChangeData(next[0]);
   };
 
   return (
-    <ul className={cn("pagenationWrap")}>
+    <ul className={cn('pagenationWrap')}>
       <li>
         {currentPageGroup[0] === 1 ? (
-          <button className={cn("previousButton")} disabled>
+          <button className={cn('previousButton')} disabled>
             <Image src={PreviousInactive} alt="이전 페이지" width={20} height={20} />
           </button>
         ) : (
-          <button className={cn("previousButton")} onClick={moveToPreviousPageGroup}>
+          <button className={cn('previousButton')} onClick={moveToPreviousPageGroup}>
             <Image src={Previous} alt="이전 페이지" width={20} height={20} />
           </button>
         )}
@@ -91,7 +97,7 @@ export default function Pagenation({
         <li key={pageNumber}>
           <button
             onClick={() => handlePageButtonClick(pageNumber)}
-            className={cn("pageNumber", currentPageNumber === pageNumber && "current")}
+            className={cn('pageNumber', currentPageNumber === pageNumber && 'current')}
           >
             {pageNumber}
           </button>
@@ -99,11 +105,11 @@ export default function Pagenation({
       ))}
       <li>
         {currentPageGroup.includes(totalPageNumber) ? (
-          <button className={cn("nextButton")} onClick={moveToNextPageGroup} disabled>
+          <button className={cn('nextButton')} onClick={moveToNextPageGroup} disabled>
             <Image src={NextInactive} alt="다음 페이지" width={20} height={20} />
           </button>
         ) : (
-          <button className={cn("nextButton")} onClick={moveToNextPageGroup}>
+          <button className={cn('nextButton')} onClick={moveToNextPageGroup}>
             <Image src={Next} alt="다음 페이지" width={20} height={20} />
           </button>
         )}

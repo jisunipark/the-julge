@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
-import instance from "@/lib/axiosInstance";
+import { Dispatch, SetStateAction } from 'react';
+import instance from '@/lib/axiosInstance';
 
 interface StateType {
   hourlyPay: number | undefined;
@@ -15,7 +15,7 @@ interface ModalType {
   modalText: string;
 }
 
-export default async function useEditNotice(
+export default async function editNotice(
   inputState: StateType,
   shopId: string,
   noticeId: string | string[] | undefined,
@@ -37,10 +37,10 @@ export default async function useEditNotice(
     await instance.put(`shops/${shopId}/notices/${noticeId}`, requestBody, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    setModal((prevState: ModalType) => ({ ...prevState, modalText: "수정되었습니다" }));
+    setModal((prevState: ModalType) => ({ ...prevState, modalText: '수정되었습니다' }));
     setModal((prevState: ModalType) => ({ ...prevState, editSuccessModal: true }));
   } catch (error) {
-    setModal((prevState: ModalType) => ({ ...prevState, modalText: "수정에 실패했습니다" }));
+    setModal((prevState: ModalType) => ({ ...prevState, modalText: '수정에 실패했습니다' }));
     setModal((prevState: ModalType) => ({ ...prevState, editFailModal: true }));
   }
 }

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import NoticeCard from "@/components/noticeList/noticeCard/noticeCard";
-import getCookies from "@/lib/getCookies";
-import useDobbyCustomList from "./useDobbyCustomList";
-import useNotDobbyCustomList from "./useNotDobbyCustomList";
-import styles from "./CustomNotice.module.scss";
+import { useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import NoticeCard from '@/components/noticeList/noticeCard/noticeCard';
+import getCookies from '@/lib/getCookies';
+import getDobbyCustomList from './useDobbyCustomList';
+import getNotDobbyCustomList from './useNotDobbyCustomList';
+import styles from './CustomNotice.module.scss';
 
 const cn = classNames.bind(styles);
 
@@ -26,7 +26,7 @@ interface Cookie {
 export default function CustomNotice() {
   const [customList, setCustomList] = useState<Array<Item>>([]);
   const [cookie, setCookie] = useState<Cookie>({ shopId: undefined, userId: undefined });
-  const speed = customList.length < 4 ? "active" : "";
+  const speed = customList.length < 4 ? 'active' : '';
 
   useEffect(() => {
     const { shopId, userId } = getCookies();
@@ -34,10 +34,10 @@ export default function CustomNotice() {
 
     async function showCarousel() {
       if (userId && !shopId) {
-        const data = await useDobbyCustomList(setCustomList, userId);
-        data.length === 0 ? useNotDobbyCustomList(setCustomList) : {};
+        const data = await getDobbyCustomList(setCustomList, userId);
+        data.length === 0 ? getNotDobbyCustomList(setCustomList) : {};
       } else {
-        await useNotDobbyCustomList(setCustomList);
+        await getNotDobbyCustomList(setCustomList);
       }
     }
 
@@ -45,13 +45,13 @@ export default function CustomNotice() {
   }, []);
 
   return (
-    <div className={cn("wrap")}>
-      <div className={cn("contentWrap")}>
-        <p className={cn("title")}>맞춤 공고</p>
-        <div className={cn("noticeCardList", { active: speed })}>
+    <div className={cn('wrap')}>
+      <div className={cn('contentWrap')}>
+        <p className={cn('title')}>맞춤 공고</p>
+        <div className={cn('noticeCardList', { active: speed })}>
           {customList.map((card: any, index: number) => {
             return (
-              <div className={cn("noticeCardBox")} key={index}>
+              <div className={cn('noticeCardBox')} key={index}>
                 <NoticeCard
                   key={card.item.id}
                   noticeId={card.item.id}

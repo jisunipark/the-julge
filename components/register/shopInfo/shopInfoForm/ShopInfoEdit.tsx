@@ -1,8 +1,8 @@
-import ShopInfoForm from "./ShopInfoForm";
-import ShopInfoTitle from "../shopInfoTitle/ShopInfoTitle";
-import { useAuth } from "@/contexts/AuthProvider";
-import classNames from "classnames/bind";
-import styles from "./ShopInfoForm.module.scss";
+import ShopInfoForm from '@/components/register/shopInfo/shopInfoForm/shopInfoForm';
+import ShopInfoTitle from '../shopInfoTitle/ShopInfoTitle';
+import { useAuth } from '@/contexts/AuthProvider';
+import classNames from 'classnames/bind';
+import styles from './ShopInfoForm.module.scss';
 
 const cn = classNames.bind(styles);
 
@@ -11,7 +11,7 @@ export default function ShopInfoEdit() {
 
   return (
     <>
-      <div className={cn("wrapper")}>
+      <div className={cn('wrapper')}>
         <ShopInfoTitle title="가게 정보" />
         <ShopInfoForm {...shop} />;
       </div>

@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import classNames from "classnames/bind";
-import instance from "@/lib/axiosInstance";
-import NoticeCard from "../noticeCard/NoticeCard";
-import getCookies from "@/lib/getCookies";
-import styles from "./NoticeCardList.module.scss";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames/bind';
+import instance from '@/lib/axiosInstance';
+import NoticeCard from '../noticeCard/NoticeCard';
+import getCookies from '@/lib/getCookies';
+import styles from './NoticeCardList.module.scss';
 
 const cn = classNames.bind(styles);
 
@@ -35,7 +36,7 @@ type NoticeListResponse = {
 
 const LIMIT = 6;
 
-async function getNoticeList({ offset = 0, limit = LIMIT }, controller = null) {
+async function getNoticeList({ offset = 0, limit = LIMIT }, controller?: AbortController) {
   try {
     const { shopId } = getCookies();
     const query = `offset=${offset}&limit=${limit}`;
@@ -75,7 +76,7 @@ export default function NoticeCardList() {
     [isLoading, hasNext, offset]
   );
 
-  const handleLoad = async (options: Props, controller = null) => {
+  const handleLoad = async (options: Props, controller?: AbortController) => {
     try {
       const res = await getNoticeList(options, controller);
       if (res) {
@@ -102,7 +103,7 @@ export default function NoticeCardList() {
   }, []);
 
   return (
-    <div className={cn("wrap")}>
+    <div className={cn('wrap')}>
       {cardList.map(({ item: { id, startsAt, workhour, hourlyPay, closed } }, index) => {
         const noticeCardProps = {
           id,
@@ -112,7 +113,11 @@ export default function NoticeCardList() {
           closed,
         };
         return (
-          <NoticeCard key={id} ref={index === cardList.length - 1 ? lastCardRef : undefined} {...noticeCardProps} />
+          <NoticeCard
+            key={id}
+            ref={index === cardList.length - 1 ? lastCardRef : undefined}
+            {...noticeCardProps}
+          />
         );
       })}
     </div>

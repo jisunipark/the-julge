@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
+import { UpdateUser } from '@/types/apiTypes';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface CommonProps {
   label: string;
@@ -7,13 +8,14 @@ export interface CommonProps {
 }
 
 export interface SelectBox extends CommonProps {
+  className?: string;
   item?: {
     id: string;
     name: string;
   }[];
   isSelected?: boolean;
   value: string;
-  setFormValues: Dispatch<SetStateAction<FormValues>>;
+  setFormValues: Dispatch<SetStateAction<UpdateUser>> | Dispatch<SetStateAction<FormValues>>;
 }
 
 export interface FileInput {
