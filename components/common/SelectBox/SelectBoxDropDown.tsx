@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
-import { SelectBox, Item } from '@/components/register/shopInfo/shopInfoForm/type';
+import type { SelectBox, Item } from '@/components/register/shopInfo/shopInfoForm/type';
 import classNames from 'classnames/bind';
-import styles from './SelectBox.module.scss';
+import styles from './selectBox.module.scss';
 
 const cn = classNames.bind(styles);
 

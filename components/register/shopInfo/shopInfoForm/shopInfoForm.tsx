@@ -12,7 +12,7 @@ import { FOOD_CATEGORY } from './constants';
 import { ADDRESS } from '@/components/common/SelectBox/constants';
 import { FormValues } from './type';
 import classNames from 'classnames/bind';
-import styles from './ShopInfoForm.module.scss';
+import styles from './shopInfoForm.module.scss';
 
 const cn = classNames.bind(styles);
 
