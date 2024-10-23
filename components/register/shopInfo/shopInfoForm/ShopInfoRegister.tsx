@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ShopInfoTitle from '../shopInfoTitle/ShopInfoTitle';
-import ShopInfoForm from '@/components/register/shopInfo/shopInfoForm/shopInfoForm';
+import ShopInfoForm from '@/components/register/shopInfo/shopInfoForm/ShopInfoForm';
 import ShopPageLayout from '@/components/shop/shopPageLayout/ShopPageLayout';
 import classNames from 'classnames/bind';
 import styles from './ShopInfoForm.module.scss';
