@@ -3,7 +3,7 @@ import ShopInfoTitle from '../shopInfoTitle/ShopInfoTitle';
 import ShopInfoForm from '@/components/register/shopInfo/shopInfoForm/shopInfoForm';
 import ShopPageLayout from '@/components/shop/shopPageLayout/ShopPageLayout';
 import classNames from 'classnames/bind';
-import styles from './shopInfoForm.module.scss';
+import styles from './ShopInfoForm.module.scss';
 
 const cn = classNames.bind(styles);
 
