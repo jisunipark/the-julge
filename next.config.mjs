@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export',
+  output: 'export',
   reactStrictMode: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -36,16 +37,6 @@ const nextConfig = {
         destination: 'https://bootcamp-api.codeit.kr/api/2-4/the-julge/images',
       },
     ];
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'bootcamp-project-api.s3.ap-northeast-2.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
   },
 };
 
