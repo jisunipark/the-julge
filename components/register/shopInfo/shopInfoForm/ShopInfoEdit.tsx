@@ -1,8 +1,8 @@
-import ShopInfoForm from '@/components/register/shopInfo/shopInfoForm/shopInfoForm';
 import ShopInfoTitle from '../shopInfoTitle/ShopInfoTitle';
 import { useAuth } from '@/contexts/AuthProvider';
 import classNames from 'classnames/bind';
 import styles from './ShopInfoForm.module.scss';
+import ShopInfoForm from '@/components/register/shopInfo/shopInfoForm/ShopInfoForm';
 
 const cn = classNames.bind(styles);
 
