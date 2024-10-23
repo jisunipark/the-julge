@@ -11,7 +11,7 @@ import Button from '@/components/common/button/Button';
 import Modal from '@/components/common/modal/Modal';
 import reloadNotice from '@/components/register/notice/editNotice/useReloadNotice';
 import editNotice from '@/components/register/notice/editNotice/useEditNotice';
-import styles from '@/components/register/notice/EditNotice/EditNotice.module.scss';
+import styles from '@/components/register/notice/editNotice/EditNotice.module.scss';
 
 const cn = classNames.bind(styles);
 
