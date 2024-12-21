@@ -10,7 +10,7 @@ The-Julge(더줄게)는 급하게 일손이 필요한 자리에 더 많은 시�
   <br>
 
 <p align="center">
- <img src="public/images/example-page.png">
+ <img src="public/images/the-julge-rounded.png">
 </p>
 
 ## 기술 스택
