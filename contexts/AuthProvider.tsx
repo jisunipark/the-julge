@@ -1,5 +1,11 @@
 import { useRouter } from "next/router";
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import instance from "@/lib/axiosInstance";
 import getCookies from "@/lib/getCookies";
 import { AuthContextType, Shop, UpdateUser, User } from "@/types/apiTypes";
@@ -28,7 +34,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const getMe = async (userId: string) => {
     const res = await instance.get(`users/${userId}`);
     const nextUser = res.data.item;
-    const nextShop = res.data.item.shop === null ? null : res.data.item.shop.item;
+    const nextShop =
+      res.data.item.shop === null ? null : res.data.item.shop.item;
 
     setValues((prev) => ({
       ...prev,
@@ -50,11 +57,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const shopId = await getMe(user.item.id);
 
-    document.cookie = `token=${token}`;
-    document.cookie = `userId=${user.item.id}`;
+    if (typeof window !== "undefined") {
+      document.cookie = `token=${token}`;
+      document.cookie = `userId=${user.item.id}`;
 
-    if (shopId) {
-      document.cookie = `shopId=${shopId}`;
+      if (shopId) {
+        document.cookie = `shopId=${shopId}`;
+      }
     }
   };
 
@@ -99,7 +108,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }));
 
     const shopId = res.data.item.id;
-    document.cookie = `shopId=${shopId}`;
+    if (typeof window !== "undefined") {
+      document.cookie = `shopId=${shopId}`;
+    }
   };
 
   const updateShop = async (formData: Shop) => {
