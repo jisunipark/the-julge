@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import NoticeCard from '@/components/noticeList/noticeCard/noticeCard';
-import NavBar from '@/components/common/navBar/NavBar';
-import Footer from '@/components/common/footer/Footer';
-import MainTitle from '@/components/common/titleBox/mainTitle/MainTitle';
-import Title from '@/components/common/titleBox/title/Title';
-import NoticeDescription from '@/components/shopNoticePage/noticeDescription/NoticeDescription';
-import Panel from '@/components/shopNoticePage/panel/Panel';
-import Pay from '@/components/shopNoticePage/pay/Pay';
-import { useAuth } from '@/contexts/AuthProvider';
-import Button from '@/components/common/button/Button';
-import Modal from '@/components/common/modal/Modal';
-import instance from '@/lib/axiosInstance';
-import getCookies from '@/lib/getCookies';
-import classNames from 'classnames/bind';
-import styles from '@/styles/detail.module.scss';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import NoticeCard from "@/components/noticeList/noticeCard/noticeCard";
+import NavBar from "@/components/common/navBar/NavBar";
+import Footer from "@/components/common/footer/Footer";
+import MainTitle from "@/components/common/titleBox/mainTitle/MainTitle";
+import Title from "@/components/common/titleBox/title/Title";
+import NoticeDescription from "@/components/shopNoticePage/noticeDescription/NoticeDescription";
+import Panel from "@/components/shopNoticePage/panel/Panel";
+import Pay from "@/components/shopNoticePage/pay/Pay";
+import { useAuth } from "@/contexts/AuthProvider";
+import Button from "@/components/common/button/Button";
+import Modal from "@/components/common/modal/Modal";
+import instance from "@/lib/axiosInstance";
+import getCookies from "@/lib/getCookies";
+import classNames from "classnames/bind";
+import styles from "@/styles/detail.module.scss";
 
 const cn = classNames.bind(styles);
 
@@ -52,23 +52,23 @@ type ShopInfo = {
 export default function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isFinished, setIsFinished] = useState<boolean>(false);
-  const [isUser, setIsUser] = useState<string>('');
-  const [userType, setUserType] = useState<string>('');
+  const [isUser, setIsUser] = useState<string>("");
+  const [userType, setUserType] = useState<string>("");
   const [cardList, setCardList] = useState<Card[]>([]);
   const [watchedItem, setWatchedItem] = useState<Card[]>([]);
   const [noticeInfo, setNoticeInfo] = useState<NoticeInfo>({
     hourlyPay: 0,
-    startsAt: '',
+    startsAt: "",
     workhour: 0,
-    description: '',
+    description: "",
     closed: false,
   });
   const [shopInfo, setShopInfo] = useState<ShopInfo>({
-    name: '',
-    category: '',
-    address1: '',
-    description: '',
-    imageUrl: '',
+    name: "",
+    category: "",
+    address1: "",
+    description: "",
+    imageUrl: "",
     originalHourlyPay: 0,
   });
   const { user } = useAuth();
@@ -77,12 +77,12 @@ export default function DetailPage() {
   const { u } = router.query;
   const { userId } = getCookies();
 
-  const isClosed = noticeInfo.closed ? 'active' : '';
-  const buttonType = isFinished ? '취소하기' : '신청하기';
-  const buttonColor = isFinished ? 'secondary' : 'primary';
+  const isClosed = noticeInfo.closed ? "active" : "";
+  const buttonType = isFinished ? "취소하기" : "신청하기";
+  const buttonColor = isFinished ? "secondary" : "primary";
 
   const status = {
-    status: 'canceled',
+    status: "canceled",
   };
 
   const handleRegisterClick = () => {
@@ -100,13 +100,13 @@ export default function DetailPage() {
   };
 
   const handleButtonClick = () => {
-    if (userType === 'employer') {
+    if (userType === "employer") {
       handleModalOpen();
     }
 
     if (isUser === undefined) {
       handleModalOpen();
-    } else if (isUser !== undefined && userType === 'employee') {
+    } else if (isUser !== undefined && userType === "employee") {
       isFinished ? handleModalOpen() : handleRegisterClick();
     }
   };
@@ -114,17 +114,25 @@ export default function DetailPage() {
   const handleCancelApply = async () => {
     const { token } = getCookies();
 
-    await instance.put(`/shops/${s}/notices/${u}/applications/${isFinished}`, status, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await instance.put(
+      `/shops/${s}/notices/${u}/applications/${isFinished}`,
+      status,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   };
 
   const handleApply = async () => {
     const { token } = getCookies();
 
-    const res = await instance.post(`shops/${s}/notices/${u}/applications`, user, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await instance.post(
+      `shops/${s}/notices/${u}/applications`,
+      user,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     setIsFinished(res.data.item.id);
   };
 
@@ -135,28 +143,32 @@ export default function DetailPage() {
   };
 
   const handleLoadNotice = async () => {
-    const res = await instance.get('notices?limit=100');
+    const res = await instance.get("notices?limit=100");
     setCardList(res.data.items);
   };
 
   useEffect(() => {
-    if (u) {
-      const stored = localStorage.getItem('watched');
+    if (typeof window !== "undefined" && u) {
+      const stored = localStorage.getItem("watched");
       let watched = stored ? JSON.parse(stored) : [];
       watched.unshift(u);
 
       const uniqueWatched = watched.filter(
         (item: string, index: number) => watched.indexOf(item) === index
       );
-      localStorage.setItem('watched', JSON.stringify(uniqueWatched));
-      setWatchedItem(cardList.filter((card) => uniqueWatched.includes(card.item.id)).slice(0, 6));
+      localStorage.setItem("watched", JSON.stringify(uniqueWatched));
+      setWatchedItem(
+        cardList
+          .filter((card) => uniqueWatched.includes(card.item.id))
+          .slice(0, 6)
+      );
     }
   }, [u, cardList]);
 
   useEffect(() => {
     handleLoadNotice();
     handleLoadNoticeDetail();
-    setUserType(user !== null ? user.type : '');
+    setUserType(user !== null ? user.type : "");
     setIsUser(userId);
   }, []);
 
@@ -167,25 +179,30 @@ export default function DetailPage() {
   return (
     <>
       <NavBar />
-      <div className={cn('detailContainer')}>
-        <div className={cn('noticeTitle')}>
+      <div className={cn("detailContainer")}>
+        <div className={cn("noticeTitle")}>
           <div>
             <Title>
               <Title.SubTitle subTitle={shopInfo.category} />
               <Title.MainTitle mainTitle={shopInfo.name} />
             </Title>
           </div>
-          <div className={cn('panelContainer')}>
+          <div className={cn("panelContainer")}>
             <Panel>
-              <div className={cn('imgWrap', { active: isClosed, past: isPast })}>
-                <Panel.Thumbnail src={shopInfo.imageUrl} alt={shopInfo.imageUrl} />
-                <span>{isPast ? '지난 공고' : '마감 완료'}</span>
+              <div
+                className={cn("imgWrap", { active: isClosed, past: isPast })}
+              >
+                <Panel.Thumbnail
+                  src={shopInfo.imageUrl}
+                  alt={shopInfo.imageUrl}
+                />
+                <span>{isPast ? "지난 공고" : "마감 완료"}</span>
               </div>
-              <div className={cn('contentContainer')}>
-                <div className={cn('content')}>
+              <div className={cn("contentContainer")}>
+                <div className={cn("content")}>
                   <Pay>
                     <Pay.SubTitle subTitle="시급" />
-                    <div className={cn('payContainer')}>
+                    <div className={cn("payContainer")}>
                       <Pay.HourlyPay hourlypay={noticeInfo.hourlyPay} />
                       <Pay.HighPayRateBadge
                         hourlyPay={noticeInfo.hourlyPay}
@@ -214,7 +231,7 @@ export default function DetailPage() {
               </div>
             </Panel>
           </div>
-          <div className={cn('desWrap')}>
+          <div className={cn("desWrap")}>
             <NoticeDescription noticeDescription={noticeInfo.description} />
           </div>
         </div>
@@ -246,7 +263,7 @@ export default function DetailPage() {
             />
           </Modal>
         )}
-        {userType === 'employer' && isModalOpen && (
+        {userType === "employer" && isModalOpen && (
           <Modal>
             <Modal.Warning
               text="사장님은 신청할 수 없습니다"
@@ -258,7 +275,7 @@ export default function DetailPage() {
         <Title>
           <MainTitle mainTitle="최근에 본 공고" />
         </Title>
-        <div className={cn('wrap')}>
+        <div className={cn("wrap")}>
           {watchedItem.map((card) => {
             return (
               <NoticeCard
