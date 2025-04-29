@@ -7,9 +7,8 @@ import {
   useState,
 } from "react";
 import instance from "@/lib/axiosInstance";
-import getCookies from "@/lib/getCookies";
+import getCookies, { setCookie, deleteCookie } from "@/lib/getCookies";
 import { AuthContextType, Shop, UpdateUser, User } from "@/types/apiTypes";
-import { deleteCookie } from "@/lib/deleteCookie";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -57,13 +56,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const shopId = await getMe(user.item.id);
 
-    if (typeof window !== "undefined") {
-      document.cookie = `token=${token}`;
-      document.cookie = `userId=${user.item.id}`;
+    setCookie("token", token);
+    setCookie("userId", user.item.id);
 
-      if (shopId) {
-        document.cookie = `shopId=${shopId}`;
-      }
+    if (shopId) {
+      setCookie("shopId", shopId);
     }
   };
 
@@ -108,9 +105,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }));
 
     const shopId = res.data.item.id;
-    if (typeof window !== "undefined") {
-      document.cookie = `shopId=${shopId}`;
-    }
+    setCookie("shopId", shopId);
   };
 
   const updateShop = async (formData: Shop) => {
