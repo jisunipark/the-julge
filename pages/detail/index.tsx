@@ -75,7 +75,7 @@ export default function DetailPage() {
   const router = useRouter();
   const { s } = router.query;
   const { u } = router.query;
-  const { userId } = getCookies();
+  const [userId, setUserId] = useState<string>("");
 
   const isClosed = noticeInfo.closed ? "active" : "";
   const buttonType = isFinished ? "취소하기" : "신청하기";
@@ -148,6 +148,17 @@ export default function DetailPage() {
   };
 
   useEffect(() => {
+    const cookies = getCookies();
+    setUserId(cookies.userId || "");
+  }, []);
+
+  useEffect(() => {
+    handleLoadNotice();
+    handleLoadNoticeDetail();
+    setUserType(user !== null ? user.type : "");
+  }, []);
+
+  useEffect(() => {
     if (typeof window !== "undefined" && u) {
       const stored = localStorage.getItem("watched");
       let watched = stored ? JSON.parse(stored) : [];
@@ -164,13 +175,6 @@ export default function DetailPage() {
       );
     }
   }, [u, cardList]);
-
-  useEffect(() => {
-    handleLoadNotice();
-    handleLoadNoticeDetail();
-    setUserType(user !== null ? user.type : "");
-    setIsUser(userId);
-  }, []);
 
   const currentDate = new Date();
   const endDate = new Date(noticeInfo.startsAt);

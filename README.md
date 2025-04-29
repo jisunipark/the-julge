@@ -1,11 +1,11 @@
 <h1 align="center">
  <img src="public/images/the-julge-logo.png" width="300">
 </h1>
-The-Julge(더줄게)는 급하게 일손이 필요한 자리에 더 많은 시급을 제공하여 아르바이트생을 빠르게 구할 수 있는 서비스입니다.   
+The-Julge is a service that helps businesses quickly find part-time workers by offering higher hourly wages for urgent job positions.
 <br>
 <br>
 
-- 개발 기간: 2024. 1. 25. ~ 2024. 2. 13. (5인 팀 프로젝트)
+- Development Period: Jan 25, 2024 ~ Feb 13, 2024 (5-member Team Project)
   <br>
   <br>
 
@@ -13,18 +13,27 @@ The-Julge(더줄게)는 급하게 일손이 필요한 자리에 더 많은 시�
  <img src="public/images/the-julge-rounded.png">
 </p>
 
-## 기술 스택
+## Tech Stack
 
 Next.js, TypeScript, SCSS, Git & GitHub, Vercel
 
-## 주요 기능
+## Key Features
 
-로그인 및 회원가입, 유저 타입에 따라 다른 기능 구현, 공고 필터링, 페이지네이션/무한스크롤을 통한 공고 리스트, 알림 기능
+- User authentication (login/signup)
+- Different features based on user types (employer/employee)
+- Job posting filters
+- Job listing with pagination/infinite scroll
+- Real-time notifications
 
-## 멤버
+## Team Members
 
-- 박지선 (Frontend)
-- 김미진 (Frontend)
-- 김영은 (Frontend)
-- 김현수 (Frontend)
-- 황채연 (Frontend)
+- Jisun Park (Frontend)
+- Mijin Kim (Frontend)
+- Youngeun Kim (Frontend)
+- Hyunsoo Kim (Frontend)
+- Chaeyeon Hwang (Frontend)
+
+## 🌏 Languages
+
+- [한국어 버전(Korean)](./README.ko.md)
+- [English Version](./README.md)

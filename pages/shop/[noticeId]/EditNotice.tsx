@@ -1,17 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, ChangeEvent, FormEvent, MouseEventHandler } from 'react';
-import { useRouter } from 'next/router';
-import classNames from 'classnames/bind';
-import getCookies from '@/lib/getCookies';
-import CloseButton from '@/components/common/closeButton/CloseButton';
-import Input from '@/components/common/input/Input';
-import CalenderInput from '@/components/common/input/CalenderInput';
-import Textarea from '@/components/common/textarea/Textarea';
-import Button from '@/components/common/button/Button';
-import Modal from '@/components/common/modal/Modal';
-import reloadNotice from '@/components/register/notice/editNotice/useReloadNotice';
-import editNotice from '@/components/register/notice/editNotice/useEditNotice';
-import styles from '@/components/register/notice/editNotice/EditNotice.module.scss';
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  FormEvent,
+  MouseEventHandler,
+} from "react";
+import { useRouter } from "next/router";
+import classNames from "classnames/bind";
+import getCookies from "@/lib/getCookies";
+import CloseButton from "@/components/common/closeButton/CloseButton";
+import Input from "@/components/common/input/Input";
+import CalenderInput from "@/components/common/input/CalenderInput";
+import Textarea from "@/components/common/textarea/Textarea";
+import Button from "@/components/common/button/Button";
+import Modal from "@/components/common/modal/Modal";
+import reloadNotice from "@/components/register/notice/editNotice/useReloadNotice";
+import editNotice from "@/components/register/notice/editNotice/useEditNotice";
+import styles from "@/components/register/notice/editNotice/EditNotice.module.scss";
 
 const cn = classNames.bind(styles);
 
@@ -32,20 +38,27 @@ interface ModalType {
 export default function EditNotice() {
   const [inputState, setInputState] = useState<StateType>({
     hourlyPay: undefined,
-    startsAt: '',
+    startsAt: "",
     workhour: undefined,
-    description: '',
+    description: "",
   });
   const [modal, setModal] = useState<ModalType>({
     editSuccessModal: false,
     editFailModal: false,
     askCloseModal: false,
-    modalText: '',
+    modalText: "",
   });
 
   const router = useRouter();
-  const { shopId, token } = getCookies();
+  const [shopId, setShopId] = useState<string>("");
+  const [token, setToken] = useState<string>("");
   const { noticeId } = router.query;
+
+  useEffect(() => {
+    const cookies = getCookies();
+    setShopId(cookies.shopId || "");
+    setToken(cookies.token || "");
+  }, []);
 
   useEffect(() => {
     async function reload() {
@@ -68,17 +81,24 @@ export default function EditNotice() {
           description: reloadedData.description,
         }));
       } catch (error) {
-        console.error('Input값 초기화 중 에러.', error);
+        console.error("Input값 초기화 중 에러.", error);
       }
     }
 
-    reload();
-  }, []);
+    if (shopId && token && noticeId) {
+      reload();
+    }
+  }, [shopId, token, noticeId]);
 
-  function setState(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+  function setState(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void {
     const value = e.target.value;
     const property = e.target.id;
-    setInputState((prevState: StateType) => ({ ...prevState, [property]: value }));
+    setInputState((prevState: StateType) => ({
+      ...prevState,
+      [property]: value,
+    }));
   }
 
   function activateAskCloaseModal() {
@@ -86,7 +106,10 @@ export default function EditNotice() {
   }
 
   function deActivateAskCloseModal() {
-    setModal((prevState: ModalType) => ({ ...prevState, askCloseModal: false }));
+    setModal((prevState: ModalType) => ({
+      ...prevState,
+      askCloseModal: false,
+    }));
   }
 
   const editSucces: MouseEventHandler<HTMLButtonElement> = () => {
@@ -94,7 +117,10 @@ export default function EditNotice() {
   };
 
   const editFail: MouseEventHandler<HTMLButtonElement> = () => {
-    setModal((prevState: ModalType) => ({ ...prevState, editFailModal: false }));
+    setModal((prevState: ModalType) => ({
+      ...prevState,
+      editFailModal: false,
+    }));
   };
 
   function movementToDetail() {
@@ -108,10 +134,13 @@ export default function EditNotice() {
   }
 
   return (
-    <div className={cn('wrapper')}>
+    <div className={cn("wrapper")}>
       {modal.editSuccessModal && (
         <Modal>
-          <Modal.Confirm text={modal.modalText} handleButtonClick={editSucces} />
+          <Modal.Confirm
+            text={modal.modalText}
+            handleButtonClick={editSucces}
+          />
         </Modal>
       )}
       {modal.editFailModal && (
@@ -129,19 +158,19 @@ export default function EditNotice() {
           />
         </Modal>
       )}
-      <form onSubmit={submit} className={cn('formBox')}>
-        <div className={cn('titleBox')}>
-          <h1 className={cn('title')}>공고 편집</h1>
+      <form onSubmit={submit} className={cn("formBox")}>
+        <div className={cn("titleBox")}>
+          <h1 className={cn("title")}>공고 편집</h1>
           <CloseButton buttonClickEvent={activateAskCloaseModal} />
         </div>
-        <div className={cn('noticeBox')}>
+        <div className={cn("noticeBox")}>
           <Input
             label="hourlyPay"
             title="시급"
             input={{
-              type: 'number',
-              id: 'hourlyPay',
-              name: 'hourlyPay',
+              type: "number",
+              id: "hourlyPay",
+              name: "hourlyPay",
             }}
             value={inputState.hourlyPay}
             placeholder="0"
@@ -152,9 +181,9 @@ export default function EditNotice() {
             label="startsAt"
             title="시작 일시"
             input={{
-              type: 'datetime-local',
-              id: 'startsAt',
-              name: 'startsAt',
+              type: "datetime-local",
+              id: "startsAt",
+              name: "startsAt",
             }}
             value={inputState.startsAt}
             onChange={setState}
@@ -163,9 +192,9 @@ export default function EditNotice() {
             label="workhour"
             title="업무 시간"
             input={{
-              type: 'number',
-              id: 'workhour',
-              name: 'workhour',
+              type: "number",
+              id: "workhour",
+              name: "workhour",
             }}
             value={inputState.workhour}
             onChange={setState}
@@ -176,11 +205,16 @@ export default function EditNotice() {
         <Textarea
           label="description"
           title="공고 설명"
-          textarea={{ id: 'description', name: 'description' }}
+          textarea={{ id: "description", name: "description" }}
           value={inputState.description}
           onChange={setState}
         />
-        <Button text="수정하기" size="fixed" color="primary" handleButtonClick={submit} />
+        <Button
+          text="수정하기"
+          size="fixed"
+          color="primary"
+          handleButtonClick={submit}
+        />
       </form>
     </div>
   );
